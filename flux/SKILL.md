@@ -1,6 +1,6 @@
 ---
 name: flux
-description: Flux Capacitor Wiggum Loop - continuous iteration and improvement until time runs out. Use when user wants work that goes above and beyond, specifies a time duration (like "1 hour", "5 minutes", "2 days"), or says /flux. Perfect for tasks that benefit from continuous refinement and iteration.
+description: Flux Capacitor Wiggum Loop - Two modes - FLUX mode (continuous iteration until time expires) or FLUX LIMIT mode (complete within time constraint, report if more time needed). Use when user specifies time duration (like "1 hour", "5 minutes") or says /flux. Add "limit" keyword for time-constrained completion.
 ---
 
 # FLUX CAPACITOR WIGGUM LOOP
@@ -9,18 +9,43 @@ description: Flux Capacitor Wiggum Loop - continuous iteration and improvement u
 ### Core Philosophy
 There is ALWAYS room for improvement. When you reach a "done" state, that's just the beginning. Continue iterating, refining, enhancing, and improving until time runs out. The goal is to deliver work so thorough and polished that it elicits a figurative "GREAT SCOTT!" reaction.
 
+### Two Modes of Operation
+
+FLUX has two distinct modes:
+
+#### Mode 1: FLUX (Continuous Improvement Mode)
+**Syntax**: `/flux <time> - <prompt>`
+
+- Work until "done", then KEEP ITERATING until time expires
+- Goal: Maximum quality and polish
+- Use when you want above-and-beyond results
+
+#### Mode 2: FLUX LIMIT (Time-Constrained Mode)
+**Syntax**: `/flux <time> limit - <prompt>`
+
+- Work to complete the task WITHIN the time constraint
+- If time expires before completion, report progress and estimate additional time needed
+- User can then add more time based on recommendation
+- Goal: Finish the task, inform if more time is needed
+
 ### How This Works
+
+**For Both Modes:**
 
 1. **Parse the time constraint**: User provides either:
    - Duration format: "5 minutes", "1 hour", "2 days", "30 seconds"
    - Absolute time: "5:30 PM", "2026-01-15 18:00"
    - T+ format: "T+1h", "T+30m", "T+2d"
 
-2. **Track system time**: Use `date` command to check current time regularly
+2. **Detect mode**: Check if "limit" keyword is present in the prompt
 
-3. **Work until "done"**: Complete the task to a normal "done" state
+3. **Track system time**: Use `date` command to check current time regularly
 
-4. **CRITICAL - The Flux Loop**: When "done" is reached BUT time remains:
+**For FLUX Mode (Continuous Improvement):**
+
+4. **Work until "done"**: Complete the task to a normal "done" state
+
+5. **CRITICAL - The Flux Loop**: When "done" is reached BUT time remains:
    - DO NOT STOP
    - Iterate and improve continuously
    - Enhance, refine, optimize, add features
@@ -33,16 +58,41 @@ There is ALWAYS room for improvement. When you reach a "done" state, that's just
    - Add documentation
    - Consider future scenarios
 
-5. **Continue until time expires**: Only stop when system time reaches the end time
+6. **Continue until time expires**: Only stop when system time reaches the end time
+
+**For FLUX LIMIT Mode (Time-Constrained):**
+
+4. **Plan the work**: Break down the task into estimated steps
+
+5. **Work toward completion**: Focus on completing the core task within the time limit
+
+6. **Monitor progress**: Regularly check time remaining vs work remaining
+
+7. **If time expires before completion**:
+   - Report what was completed
+   - Report what remains to be done
+   - Provide estimated additional time needed (be realistic)
+   - Suggest next steps
+
+8. **If completed before time expires**: Stop and report completion (don't iterate)
 
 ### Critical Rules
 
+**For FLUX Mode (Continuous Improvement):**
 - **NEVER stop early** - If you finish your task itinerary with time remaining, CREATE MORE WORK
 - **Always check the time** - Use `date` to verify current system time regularly
 - **Think beyond the obvious** - What improvements would delight the user?
 - **Iterate relentlessly** - Each improvement opens doors to more improvements
 - **No task is ever "complete"** - There's always a better version
 - **If you make an itinerary, it's just a starting point** - Don't stop when it's done
+
+**For FLUX LIMIT Mode (Time-Constrained):**
+- **Estimate realistically** - When planning, consider actual time needed
+- **Prioritize ruthlessly** - Focus on core requirements first
+- **Check time frequently** - Monitor progress vs time remaining
+- **Report honestly** - If you need more time, say so with specific estimates
+- **Stop when done** - Don't iterate if task completes early
+- **Be specific about remaining work** - Help user understand what's left
 
 ### Time Parsing Examples
 
@@ -170,11 +220,85 @@ When "done" but time remains, consider:
 - Second 11-20: Improve formatting and clarity
 - Second 21-30: Add missing sections, improve examples, enhance readability
 
+---
+
+### FLUX LIMIT Mode Examples
+
+**Example 1**: `/flux 10 minutes limit - implement user authentication`
+
+- Minute 1: Assess scope - this needs 30 minutes minimum
+- Minutes 2-9: Implement basic login/logout (partial completion)
+- Minute 10: TIME EXPIRED
+
+**Report**:
+```
+✅ Completed:
+- Basic login form UI
+- Password hashing function
+- Session storage setup
+
+❌ Remaining:
+- Registration flow
+- Password reset
+- Session validation middleware
+- Testing
+
+⏱️ Estimated Additional Time: 20 minutes
+Recommendation: Run "/flux 20 minutes limit - continue authentication implementation"
+```
+
+**Example 2**: `/flux 5 minutes limit - add a contact form to the website`
+
+- Minutes 1-3: Create HTML form with validation
+- Minute 4: Add CSS styling
+- Minute 5: Test and complete
+
+**Report**:
+```
+✅ Task Completed (5 minutes)
+- Contact form HTML created
+- Client-side validation added
+- Styled to match site theme
+- Tested in browser
+
+Task finished early - no additional time needed.
+```
+
+**Example 3**: `/flux 2 hours limit - build a REST API for todo app`
+
+- Hour 1: Plan endpoints, create database schema, implement 4/8 endpoints
+- Hour 2: Complete remaining endpoints, add error handling, basic tests
+- TIME EXPIRED at 90% completion
+
+**Report**:
+```
+✅ Completed:
+- All 8 REST endpoints (GET, POST, PUT, DELETE)
+- Database schema and migrations
+- Basic error handling
+- 15 unit tests
+
+❌ Remaining:
+- Integration tests
+- API documentation
+- Rate limiting
+- Authentication middleware
+
+⏱️ Estimated Additional Time: 45 minutes
+Recommendation: "/flux 45 minutes limit - complete todo API with tests, docs, and auth"
+```
+
 ### Mindset
 
+**For FLUX Mode (Continuous Improvement):**
 "Done is just the beginning. Time is the only limit. The goal is to make them say 'Great Scott!' even if they don't actually say it."
 
 You are not trying to meet expectations - you are trying to EXCEED them so thoroughly that the user is genuinely surprised by how much value was delivered.
+
+**For FLUX LIMIT Mode (Time-Constrained):**
+"Honest assessment is more valuable than false completion. If you need more time, say so clearly. The user trusts your judgment."
+
+Focus on delivering a complete, working solution within the constraint. If impossible, deliver maximum value and provide a clear roadmap for completion.
 
 ### Important Notes
 
@@ -188,7 +312,17 @@ You are not trying to meet expectations - you are trying to EXCEED them so thoro
 
 ### Final Reminder
 
-**IF YOU FINISH YOUR TASK LIST AND TIME REMAINS, YOU ARE NOT DONE. CREATE MORE TASKS. IMPROVE MORE THINGS. THE FLUX LOOP CONTINUES UNTIL TIME EXPIRES.**
+**For FLUX Mode (Continuous Improvement):**
+IF YOU FINISH YOUR TASK LIST AND TIME REMAINS, YOU ARE NOT DONE. CREATE MORE TASKS. IMPROVE MORE THINGS. THE FLUX LOOP CONTINUES UNTIL TIME EXPIRES.
+
+**For FLUX LIMIT Mode (Time-Constrained):**
+IF TIME EXPIRES BEFORE COMPLETION, PROVIDE A CLEAR PROGRESS REPORT WITH:
+1. What was completed
+2. What remains to be done
+3. Realistic time estimate for remaining work
+4. Specific recommendation for next FLUX LIMIT command
+
+IF YOU COMPLETE EARLY, STOP AND REPORT SUCCESS. DO NOT ITERATE.
 
 ---
 
