@@ -33,7 +33,10 @@ The longer the duration, the more dynamic and transformative the results.
 ### The FLUX Process
 
 1. **Parse time**: Calculate end time (e.g., 24 hours from now)
-2. **Save end time**: `echo $END_TIME > /tmp/flux_end_time`
+2. **Save end time and confirm**:
+   ```bash
+   START_TIME=$(date +%s); END_TIME=$((START_TIME + SECONDS)); echo $END_TIME > /tmp/flux_end_time; echo "Timer set: $((END_TIME - START_TIME)) seconds"
+   ```
 3. **Start work**: Begin the core task
 4. **After EVERY chunk**: Run time check bash command with `echo $REMAINING`
 5. **See the number**: You MUST see remaining seconds output
