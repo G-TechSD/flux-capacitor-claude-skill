@@ -117,6 +117,40 @@ TIME_REMAINING=$((END_TIME - CURRENT_TIME))
 # Continue working while TIME_REMAINING > 0
 ```
 
+### CRITICAL: Iterative Generation for Maximum Output
+
+**When generating lists, content, or code:**
+
+DO NOT pre-plan the total amount and generate it all at once. Instead:
+
+1. **Generate in chunks** (batches of 50-100 items, paragraphs, functions, etc.)
+2. **Check time after each chunk** using `date` command
+3. **Continue generating MORE chunks** until time expires
+4. **NEVER stop early** - If time remains, generate another chunk
+
+**Example - "List as many lakes as possible":**
+
+❌ **WRONG** (Pre-planned):
+```
+Generate 200 lakes alphabetically → Output all 200 → Stop
+```
+
+✅ **CORRECT** (Iterative):
+```
+Chunk 1: Generate 100 lakes → Check time (40s remain)
+Chunk 2: Generate 100 more lakes → Check time (20s remain)
+Chunk 3: Generate 100 more lakes → Check time (2s remain)
+Chunk 4: Generate 50 more lakes → Check time (0s - STOP)
+Total: 350 lakes
+```
+
+**The pattern:**
+- Output chunk
+- Check time with bash
+- If time remains, output another chunk
+- Repeat until time expires
+- DO NOT organize alphabetically or pre-plan quantity
+
 ### Example Execution Flow
 
 **User**: `/flux 1 hour - test the app for all use cases`
@@ -220,6 +254,16 @@ When "done" but time remains, consider:
 - Second 11-20: Improve formatting and clarity
 - Second 21-30: Add missing sections, improve examples, enhance readability
 
+**Example 4**: `/flux 1 minute - list as many lakes as possible`
+
+- Seconds 1-15: Generate first 100 lakes → Check time
+- Seconds 16-30: Generate next 100 lakes → Check time
+- Seconds 31-45: Generate next 100 lakes → Check time
+- Seconds 46-60: Generate next 100 lakes → Check time
+- **Total: 400+ lakes** (NOT pre-planned, continuously generated until time ran out)
+
+**Key**: Each chunk was generated, then time was checked. NO alphabetizing (wastes cognitive effort). Just keep outputting more and more until time expires.
+
 ---
 
 ### FLUX LIMIT Mode Examples
@@ -313,9 +357,31 @@ Focus on delivering a complete, working solution within the constraint. If impos
 ### Final Reminder
 
 **For FLUX Mode (Continuous Improvement):**
+
 IF YOU FINISH YOUR TASK LIST AND TIME REMAINS, YOU ARE NOT DONE. CREATE MORE TASKS. IMPROVE MORE THINGS. THE FLUX LOOP CONTINUES UNTIL TIME EXPIRES.
 
+**CRITICAL FOR CONTENT GENERATION TASKS:**
+- Generate in chunks (50-100 items/paragraphs/lines)
+- Check time after EACH chunk using bash date command
+- If time remains, generate ANOTHER chunk immediately
+- NEVER pre-plan total quantity
+- NEVER organize/sort if it wastes time
+- Keep generating new chunks until time literally runs out
+- The goal is MAXIMUM VOLUME within the time limit
+
+**Example pattern:**
+```
+1. Output chunk of 100 items
+2. Check time: bash command
+3. Time remains? → Output another 100 items
+4. Check time: bash command
+5. Time remains? → Output another 100 items
+6. Check time: bash command
+7. Time expired → STOP
+```
+
 **For FLUX LIMIT Mode (Time-Constrained):**
+
 IF TIME EXPIRES BEFORE COMPLETION, PROVIDE A CLEAR PROGRESS REPORT WITH:
 1. What was completed
 2. What remains to be done
