@@ -1,6 +1,6 @@
-# Claude Skills Collection
+# Flux Capacitor Claude Skill
 
-A collection of custom skills for [Claude Code](https://claude.com/claude-code) that extend its capabilities with specialized behaviors and workflows.
+The FLUX CAPACITOR WIGGUM LOOP skill for [Claude Code](https://claude.com/claude-code) - continuous iteration and improvement until time runs out!
 
 ## What are Claude Skills?
 
@@ -36,13 +36,13 @@ The FLUX skill implements continuous iteration and improvement. When you reach a
 
 ```bash
 # Clone the repository
-git clone https://github.com/G-TechSD/claude-skills.git
+git clone https://github.com/G-TechSD/flux-capacitor-claude-skill.git
 
 # Copy skills to your personal Claude directory
-cp -r claude-skills/*/ ~/.claude/skills/
+cp -r flux-capacitor-claude-skill/*/ ~/.claude/skills/
 
 # Or use symlinks to stay synced with updates
-ln -s $(pwd)/claude-skills/flux ~/.claude/skills/flux
+ln -s $(pwd)/flux-capacitor-claude-skill/flux ~/.claude/skills/flux
 ```
 
 ### Project-Specific Installation
@@ -52,7 +52,7 @@ ln -s $(pwd)/claude-skills/flux ~/.claude/skills/flux
 mkdir -p .claude/skills
 
 # Copy the skills you want
-cp -r /path/to/claude-skills/flux .claude/skills/
+cp -r /path/to/flux-capacitor-claude-skill/flux .claude/skills/
 
 # Commit to your repo so your team gets the skills too
 git add .claude/skills/
