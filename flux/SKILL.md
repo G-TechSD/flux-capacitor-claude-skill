@@ -60,12 +60,19 @@ When you complete the initial task:
 
 **NEVER STOP UNTIL TIME EXPIRES.**
 
+**CRITICAL: RUN THE FULL DURATION**
+- This is not optional
+- If user says "20 minutes", you run for the full 20 minutes
+- If time remains and you haven't generated output yet, keep going
+- Do not stop early under any circumstances
+
 **HOW TO KNOW IF TIME REMAINS:**
 - After EVERY chunk, run: `END_TIME=$(cat /tmp/flux_end_time); REMAINING=$((END_TIME - $(date +%s))); echo $REMAINING`
 - You'll see a number (remaining seconds)
 - If the number > 0: Keep going, generate another chunk
 - If the number <= 0: Stop
 - **Never guess or assume - always check and SEE the number**
+- **Never stop before time reaches 0 or negative**
 
 ### What to Do When "Done"
 
@@ -119,21 +126,29 @@ For content generation, code, or lists:
 ### The Pattern
 
 ```
-1. Generate chunk (code, text, items, features)
+1. Generate chunk of UNIQUE items (code, text, items, features)
 2. TIME CHECK: Run bash command, SEE remaining seconds
-3. Remaining > 0? → Generate another chunk immediately
+3. Remaining > 0? → Generate another chunk of NEW UNIQUE items immediately
 4. TIME CHECK: Run bash command, SEE remaining seconds
-5. Remaining > 0? → Generate another chunk immediately
+5. Remaining > 0? → Generate another chunk of NEW UNIQUE items immediately
 6. Repeat until remaining <= 0
 ```
 
+**CRITICAL - NO DUPLICATES (MANDATORY)**
+- Track what you've already generated (keep mental/context inventory)
+- Never repeat the same item twice - this is wasteful
+- Always generate NEW content in each chunk
+- If approaching duplicates, pivot to similar but different items
+- Efficiency: More unique items per time unit is better than repetition
+- Quality over quantity: 1000 unique items > 5000 with 80% duplicates
+
 **Example of time checks you'll see:**
 ```
-First chunk: 500 items generated
+First chunk: 500 unique items
 Bash: echo $REMAINING → Output: 1140 (19 minutes left)
-Second chunk: 500 more items
+Second chunk: 500 MORE unique items (never seen before)
 Bash: echo $REMAINING → Output: 1080 (18 minutes left)
-Third chunk: 500 more items
+Third chunk: 500 MORE unique items (never seen before)
 Bash: echo $REMAINING → Output: 1020 (17 minutes left)
 ... continue until remaining <= 0
 ```
