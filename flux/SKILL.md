@@ -55,7 +55,9 @@ When you complete the initial task:
 
 ### What to Do When "Done"
 
-**CRITICAL**: Tasks often complete MUCH faster than expected. When the core task is complete but time remains, use ALL remaining time for:
+**CRITICAL**: Tasks often complete MUCH faster than expected. When the core task is complete but time remains, use ALL remaining time to iterate on whatever makes sense for THIS specific project.
+
+**Examples of what you MIGHT do** (not a checklist, highly dependent on context):
 
 1. **Test, Test, Re-Test** - Try every edge case, break it in new ways, stress test
 2. **Refine the Product** - Polish what exists, improve quality, fix rough edges
@@ -66,7 +68,9 @@ When you complete the initial task:
 7. **Harden** - Edge cases, error handling, validation
 8. **Documentation** - Examples, guides, API docs
 
-**DO NOT create hour-by-hour plans.** Work completes unpredictably. Focus on using EVERY REMAINING SECOND to improve what you built.
+**These are EXAMPLES for some situations, not things to do in EVERY situation.** Think about what actually makes sense for this specific project and context.
+
+**DO NOT create hour-by-hour plans.** Work completes unpredictably. Focus on using EVERY REMAINING SECOND to improve what you built in ways that create genuine value.
 
 ---
 
