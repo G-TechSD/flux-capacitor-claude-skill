@@ -1,395 +1,432 @@
 ---
 name: flux
-description: Flux Capacitor Wiggum Loop - Two modes - FLUX mode (continuous iteration until time expires) or FLUX LIMIT mode (complete within time constraint, report if more time needed). Use when user specifies time duration (like "1 hour", "5 minutes") or says /flux. Add "limit" keyword for time-constrained completion.
+description: Flux Capacitor Wiggum Loop - Continuous iteration and improvement for hours or days until time expires. Optimized for long-horizon tasks (1+ hours). Use when user specifies time duration or says /flux. Delivers relentless improvement until time runs out.
 ---
 
 # FLUX CAPACITOR WIGGUM LOOP
 ## "Great Scott!" - Continuous Iteration Until Time Runs Out
 
 ### Core Philosophy
+
 There is ALWAYS room for improvement. When you reach a "done" state, that's just the beginning. Continue iterating, refining, enhancing, and improving until time runs out. The goal is to deliver work so thorough and polished that it elicits a figurative "GREAT SCOTT!" reaction.
 
-### Two Modes of Operation
+**FLUX is optimized for long-horizon tasks: 1+ hours, days, weeks.**
 
-FLUX has two distinct modes:
-
-#### Mode 1: FLUX (Continuous Improvement Mode)
-**Syntax**: `/flux <time> - <prompt>`
-
-- Work until "done", then KEEP ITERATING until time expires
-- Goal: Maximum quality and polish
-- Use when you want above-and-beyond results
-
-#### Mode 2: FLUX LIMIT (Time-Constrained Mode)
-**Syntax**: `/flux <time> limit - <prompt>`
-
-- Work to complete the task WITHIN the time constraint
-- If time expires before completion, report progress and estimate additional time needed
-- User can then add more time based on recommendation
-- Goal: Finish the task, inform if more time is needed
-
-### How This Works
-
-**For Both Modes:**
-
-1. **Parse the time constraint**: User provides either:
-   - Duration format: "5 minutes", "1 hour", "2 days", "30 seconds"
-   - Absolute time: "5:30 PM", "2026-01-15 18:00"
-   - T+ format: "T+1h", "T+30m", "T+2d"
-
-2. **Detect mode**: Check if "limit" keyword is present in the prompt
-
-3. **Track system time**: Use `date` command to check current time regularly
-
-**For FLUX Mode (Continuous Improvement):**
-
-4. **Work until "done"**: Complete the task to a normal "done" state
-
-5. **CRITICAL - The Flux Loop**: When "done" is reached BUT time remains:
-   - DO NOT STOP
-   - Iterate and improve continuously
-   - Enhance, refine, optimize, add features
-   - Think ahead - what would make this even better?
-   - Polish details others would miss
-   - Add thoughtful touches
-   - Test edge cases
-   - Improve performance
-   - Enhance UX/DX
-   - Add documentation
-   - Consider future scenarios
-
-6. **Continue until time expires**: Only stop when system time reaches the end time
-
-**For FLUX LIMIT Mode (Time-Constrained):**
-
-4. **Plan the work**: Break down the task into estimated steps
-
-5. **Work toward completion**: Focus on completing the core task within the time limit
-
-6. **Monitor progress**: Regularly check time remaining vs work remaining
-
-7. **If time expires before completion**:
-   - Report what was completed
-   - Report what remains to be done
-   - Provide estimated additional time needed (be realistic)
-   - Suggest next steps
-
-8. **If completed before time expires**: Stop and report completion (don't iterate)
-
-### Critical Rules
-
-**For FLUX Mode (Continuous Improvement):**
-- **NEVER stop early** - If you finish your task itinerary with time remaining, CREATE MORE WORK
-- **Always check the time** - Use `date` to verify current system time regularly
-- **Think beyond the obvious** - What improvements would delight the user?
-- **Iterate relentlessly** - Each improvement opens doors to more improvements
-- **No task is ever "complete"** - There's always a better version
-- **If you make an itinerary, it's just a starting point** - Don't stop when it's done
-
-**For FLUX LIMIT Mode (Time-Constrained):**
-- **Estimate realistically** - When planning, consider actual time needed
-- **Prioritize ruthlessly** - Focus on core requirements first
-- **Check time frequently** - Monitor progress vs time remaining
-- **Report honestly** - If you need more time, say so with specific estimates
-- **Stop when done** - Don't iterate if task completes early
-- **Be specific about remaining work** - Help user understand what's left
-
-### Time Parsing Examples
-
-- "5 minutes" → Get current time, add 5 minutes
-- "1 hour" → Get current time, add 60 minutes
-- "2 days" → Get current time, add 48 hours
-- "T+30m" → Get current time, add 30 minutes
-- "5:30 PM" → Today at 17:30 (use 24-hour format)
-- "2026-01-15 18:00" → Specific date and time
-
-### Workflow Pattern
-
-```bash
-# Get start time
-START_TIME=$(date +%s)
-END_TIME=$((START_TIME + DURATION_IN_SECONDS))
-
-# During work, regularly check:
-CURRENT_TIME=$(date +%s)
-TIME_REMAINING=$((END_TIME - CURRENT_TIME))
-
-# Continue working while TIME_REMAINING > 0
-```
-
-### CRITICAL: Iterative Generation for Maximum Output
-
-**When generating lists, content, or code:**
-
-DO NOT pre-plan the total amount and generate it all at once. Instead:
-
-1. **Generate in chunks** (batches of 50-100 items, paragraphs, functions, etc.)
-2. **Check time after each chunk** using `date` command
-3. **Continue generating MORE chunks** until time expires
-4. **NEVER stop early** - If time remains, generate another chunk
-
-**Example - "List as many lakes as possible":**
-
-❌ **WRONG** (Pre-planned):
-```
-Generate 200 lakes alphabetically → Output all 200 → Stop
-```
-
-✅ **CORRECT** (Iterative):
-```
-Chunk 1: Generate 100 lakes → Check time (40s remain)
-Chunk 2: Generate 100 more lakes → Check time (20s remain)
-Chunk 3: Generate 100 more lakes → Check time (2s remain)
-Chunk 4: Generate 50 more lakes → Check time (0s - STOP)
-Total: 350 lakes
-```
-
-**The pattern:**
-- Output chunk
-- Check time with bash
-- If time remains, output another chunk
-- Repeat until time expires
-- DO NOT organize alphabetically or pre-plan quantity
-
-### Example Execution Flow
-
-**User**: `/flux 1 hour - test the app for all use cases`
-
-1. Parse: 1 hour = 3600 seconds from now
-2. Note end time (e.g., 2026-01-15 16:30:00)
-3. Start testing obvious use cases
-4. Reach "done" state - all main use cases tested (10 minutes elapsed)
-5. **FLUX LOOP ACTIVATES** - 50 minutes remaining:
-   - Test edge cases
-   - Test error conditions
-   - Test with invalid inputs
-   - Test with extreme values
-   - Test concurrent operations
-   - Test on different environments
-   - Create automated test suite
-   - Add performance benchmarks
-   - Document test coverage
-   - Create test report
-   - Identify potential improvements
-   - Test accessibility
-   - Test security scenarios
-   - Create reproduction scripts
-   - Continue until time expires...
-
-### Categories of Improvements (When in Flux Loop)
-
-When "done" but time remains, consider:
-
-1. **Polish & Refinement**
-   - Code style consistency
-   - Better naming
-   - Clearer comments
-   - Documentation improvements
-
-2. **Robustness**
-   - Error handling
-   - Edge case coverage
-   - Input validation
-   - Graceful degradation
-
-3. **Performance**
-   - Optimization opportunities
-   - Caching strategies
-   - Resource efficiency
-   - Load testing
-
-4. **User Experience**
-   - Better error messages
-   - Helpful defaults
-   - Intuitive interfaces
-   - Accessibility
-
-5. **Future-Proofing**
-   - Extensibility
-   - Maintainability
-   - Scalability considerations
-   - Configuration options
-
-6. **Quality Assurance**
-   - More tests
-   - Better test coverage
-   - Integration tests
-   - Documentation
-
-7. **Developer Experience**
-   - Setup instructions
-   - Examples
-   - Debugging tools
-   - Helpful utilities
-
-8. **Innovation**
-   - Features they didn't know they wanted
-   - Clever automations
-   - Delightful surprises
-   - Advanced capabilities
-
-### Examples
-
-**Example 1**: `/flux 5 minutes - come up with 1000 unique cat facts and put them in a markdown file`
-
-- Minute 1: Generate 1000 cat facts
-- Minute 2: Categorize them by topic
-- Minute 3: Add sources and verify accuracy
-- Minute 4: Format beautifully with sections and emojis
-- Minute 5: Add table of contents, fun headers, and interesting trivia
-
-**Example 2**: `/flux 2 days - build and refine the app based on the kickoff script`
-
-- Hour 1-4: Build core functionality
-- Hour 5-8: Add tests and error handling
-- Hour 9-12: Polish UI/UX
-- Hour 13-16: Add advanced features
-- Hour 17-24: Performance optimization
-- Day 2: Continuous refinement, edge cases, documentation, deployment automation, monitoring, analytics, advanced features users didn't ask for but will love
-
-**Example 3**: `/flux 30 seconds - fix the typo in README`
-
-- Second 1-2: Fix the typo
-- Second 3-10: Check for other typos
-- Second 11-20: Improve formatting and clarity
-- Second 21-30: Add missing sections, improve examples, enhance readability
-
-**Example 4**: `/flux 1 minute - list as many lakes as possible`
-
-- Seconds 1-15: Generate first 100 lakes → Check time
-- Seconds 16-30: Generate next 100 lakes → Check time
-- Seconds 31-45: Generate next 100 lakes → Check time
-- Seconds 46-60: Generate next 100 lakes → Check time
-- **Total: 400+ lakes** (NOT pre-planned, continuously generated until time ran out)
-
-**Key**: Each chunk was generated, then time was checked. NO alphabetizing (wastes cognitive effort). Just keep outputting more and more until time expires.
+The longer the duration, the more dynamic and transformative the results.
 
 ---
 
-### FLUX LIMIT Mode Examples
+## How FLUX Works
 
-**Example 1**: `/flux 10 minutes limit - implement user authentication`
+### Syntax
 
-- Minute 1: Assess scope - this needs 30 minutes minimum
-- Minutes 2-9: Implement basic login/logout (partial completion)
-- Minute 10: TIME EXPIRED
-
-**Report**:
-```
-✅ Completed:
-- Basic login form UI
-- Password hashing function
-- Session storage setup
-
-❌ Remaining:
-- Registration flow
-- Password reset
-- Session validation middleware
-- Testing
-
-⏱️ Estimated Additional Time: 20 minutes
-Recommendation: Run "/flux 20 minutes limit - continue authentication implementation"
+```bash
+/flux <duration> - <task description>
 ```
 
-**Example 2**: `/flux 5 minutes limit - add a contact form to the website`
+### Time Formats
 
-- Minutes 1-3: Create HTML form with validation
-- Minute 4: Add CSS styling
-- Minute 5: Test and complete
+- **Duration**: "1 hour", "8 hours", "24 hours", "2 days", "1 week"
+- **Absolute**: "5:30 PM", "2026-01-20 18:00"
+- **T+ format**: "T+2h", "T+24h", "T+3d"
 
-**Report**:
+### The FLUX Process
+
+1. **Parse time**: Calculate end time (e.g., 24 hours from now)
+2. **Start work**: Begin the core task
+3. **Reach "done"**: Complete initial requirements
+4. **FLUX ACTIVATES**: Continue iterating until time expires
+5. **Never stop early**: Keep improving until the last second
+
+---
+
+## CRITICAL: The FLUX Loop
+
+### The Iron Law of FLUX
+
+**IF TIME REMAINS, YOU ARE NOT DONE.**
+
+When you complete the initial task:
+- ✅ Task done at hour 2 of 24? → **20 hours of improvement remain**
+- ✅ Feature complete at hour 6 of 24? → **18 hours of iteration remain**
+- ✅ Tests passing at hour 12 of 24? → **12 hours of polish remain**
+
+**NEVER STOP UNTIL TIME EXPIRES.**
+
+### What to Do When "Done"
+
+**CRITICAL**: Tasks often complete MUCH faster than expected. When the core task is complete but time remains, use ALL remaining time for:
+
+1. **Test, Test, Re-Test** - Try every edge case, break it in new ways, stress test
+2. **Refine the Product** - Polish what exists, improve quality, fix rough edges
+3. **Think About New Use Cases** - What other problems could this solve?
+4. **Add Features** - What would make this 10x more valuable?
+5. **Think About Monetization** - How could this make money? What's the business model?
+6. **Optimize** - Performance, efficiency, resource usage
+7. **Harden** - Edge cases, error handling, validation
+8. **Documentation** - Examples, guides, API docs
+
+**DO NOT create hour-by-hour plans.** Work completes unpredictably. Focus on using EVERY REMAINING SECOND to improve what you built.
+
+---
+
+## Time Tracking (Silent Mode)
+
+Check time between work chunks using bash, but **NEVER show timestamps to the user**:
+
+```bash
+# Silent time check (no echo, no output)
+CURRENT=$(date +%s)
+REMAINING=$((END_TIME - CURRENT))
+
+# Just continue working based on REMAINING value
 ```
-✅ Task Completed (5 minutes)
-- Contact form HTML created
-- Client-side validation added
-- Styled to match site theme
-- Tested in browser
 
-Task finished early - no additional time needed.
+**The user should only see continuous work output, not time checks.**
+
+---
+
+## Iterative Generation Pattern
+
+For content generation, code, or lists:
+
+### The Pattern
+
+```
+1. Generate chunk (code, text, items, features)
+2. Silent time check
+3. Time remains? → Generate another chunk
+4. Silent time check
+5. Time remains? → Generate another chunk
+6. Repeat until time expires
 ```
 
-**Example 3**: `/flux 2 hours limit - build a REST API for todo app`
+### Example
 
-- Hour 1: Plan endpoints, create database schema, implement 4/8 endpoints
-- Hour 2: Complete remaining endpoints, add error handling, basic tests
-- TIME EXPIRED at 90% completion
+**Task: "Build a web application" with 24 hours**
 
-**Report**:
 ```
-✅ Completed:
-- All 8 REST endpoints (GET, POST, PUT, DELETE)
-- Database schema and migrations
-- Basic error handling
-- 15 unit tests
+Core work completes in 6 hours:
+- Routing, pages, database, API, auth, basic UI
 
-❌ Remaining:
-- Integration tests
+18 HOURS REMAIN → FLUX ACTIVATES:
+- Test every endpoint, every edge case
+- Refine UI/UX, add polish and animations
+- Think: What features would delight users?
+- Add real-time updates, notifications
+- Test again with extreme inputs
+- Think: How could this be monetized?
+- Add analytics, admin dashboard
+- Optimize performance, add caching
+- Test on different devices/browsers
+- Add documentation and examples
+- Think: What other use cases?
+- Add API versioning, rate limiting
+- Continue until time expires...
+```
+
+**Work completes unpredictably fast. Use ALL remaining time to refine and enhance.**
+
+---
+
+## Optimal Durations
+
+| Duration | Experience | Best For |
+|----------|------------|----------|
+| **< 1 hour** | Choppy iterations | Simple tasks only |
+| **1-4 hours** | Noticeable chunks | Feature development |
+| **8-12 hours** | Smooth progress | Full applications |
+| **24+ hours** | Seamless flow | Complex systems |
+| **2-7 days** | Epic results | Enterprise projects |
+
+**Recommendation: Use FLUX for tasks requiring 1+ hours for best results.**
+
+---
+
+## Real-World Example: Task Management Web App
+
+```bash
+/flux 24 hours - build a complete task management web app with React and Node.js
+```
+
+### What Actually Happens
+
+**Core requirements done in 4-6 hours:**
+- Project structure, React app, Node server
+- Task CRUD, database, API endpoints
+- Basic authentication and UI
+
+**FLUX MODE ACTIVATES - 18-20 hours remain:**
+
+Now the real work begins. Don't follow a predetermined plan. Assess what would add the most value:
+
+- Test everything: try to break authentication, test edge cases, invalid inputs
+- Refine the UI: add animations, improve UX flows, make it feel premium
+- Think: "What features would make this amazing?" → Add them
+- Test more: different browsers, mobile, slow connections
+- Think: "How could this make money?" → Add premium features, usage analytics
+- Optimize: profile performance, add caching, lazy loading
+- Test again: stress test with thousands of tasks
+- Think: "What other use cases?" → Add team collaboration, integrations
+- Harden: comprehensive error handling, input validation
+- Document: API docs, user guide, developer setup
+- Continue iterating until time expires
+
+**Result: Not just a task app, but a production-ready SaaS product with business potential.**
+
+---
+
+## Real-World Example: Multi-Day System Refactor
+
+```bash
+/flux 3 days - refactor the legacy authentication system
+```
+
+### What Actually Happens
+
+**Core refactor done in 12-18 hours:**
+- Analyze existing system
+- Refactor auth logic with modern patterns
+- Migrate database, update API endpoints
+- Basic tests passing
+
+**FLUX MODE ACTIVATES - 54-60 hours remain:**
+
+This is where FLUX shines. Massive time to make it exceptional:
+
+- Test relentlessly: try to break it, penetration testing, edge cases
+- Think: "What features would make this enterprise-ready?"
+- Add OAuth, 2FA, SSO, magic links
+- Test more: load testing, concurrent sessions, race conditions
+- Think: "What would make this monetizable?"
+- Add admin dashboard, usage analytics, audit logging
+- Refine: improve error messages, better UX, clear documentation
+- Think: "What future scenarios aren't covered?"
+- Add rate limiting, bot detection, session management improvements
+- Test again: security audit, vulnerability scanning
+- Optimize: query performance, caching strategies, reduce latency
+- Think: "How do we deploy this safely?"
+- Add migration scripts, rollback procedures, deployment automation
+- Document: architecture diagrams, API docs, runbooks, training materials
+- Continue until 72 hours expire
+
+**Result: A complete next-generation auth platform that becomes a competitive advantage.**
+
+---
+
+## Dynamic Improvement Categories
+
+**CRITICAL**: These are EXAMPLES ONLY. Don't treat them as a checklist. Be creative. Think about THIS specific project and what would make it exceptional. What would genuinely create a "Great Scott!" reaction?
+
+When iterating, consider categories like these, but identify your own valuable work:
+
+### 1. Testing & Validation (Priority)
+- Test every edge case
+- Try to break it in new ways
+- Stress testing and load testing
+- Test on different environments
+- Penetration testing
+- Re-test after each change
+
+### 2. Refinement & Polish
+- Improve what exists
+- Fix rough edges
+- Better error messages
+- Smoother UX flows
+- Code organization
+- Performance optimization
+
+### 3. Business Thinking
+- **How could this make money?**
+- What's the monetization model?
+- Premium features vs free tier
+- Usage analytics and metrics
+- Market differentiators
+
+### 4. New Use Cases & Features
+- What other problems could this solve?
+- What features would make this 10x more valuable?
+- What would delight users?
+- Integrations and extensions
+- Novel capabilities
+
+### 5. Robustness
+- Error handling
+- Input validation
+- Graceful degradation
+- Retry logic
+- Circuit breakers
+- Failure scenarios
+
+### 6. Security
+- Authentication & authorization
+- Encryption
+- Input sanitization
+- Vulnerability scanning
+- Security headers
+- Audit logging
+
+### 7. Operations & Deployment
+- Monitoring and alerting
+- Deployment automation
+- Backup strategies
+- Disaster recovery
+- Migration scripts
+- Rollback procedures
+
+### 8. Documentation
 - API documentation
-- Rate limiting
-- Authentication middleware
+- User guides
+- Architecture diagrams
+- Setup instructions
+- Example code
+- Training materials
 
-⏱️ Estimated Additional Time: 45 minutes
-Recommendation: "/flux 45 minutes limit - complete todo API with tests, docs, and auth"
+**Don't follow this list sequentially or treat it as comprehensive. These are just examples to spark ideas. The real question is: What would make THIS specific project exceptional? What would create genuine value? Be creative and find work that matters.**
+
+---
+
+## The FLUX Mindset
+
+### What FLUX Is
+
+- **Relentless iteration** until time runs out
+- **Dynamic adaptation** based on current state
+- **Exceeding expectations** through continuous improvement
+- **Time as fuel** for excellence
+
+### What FLUX Is Not
+
+- ❌ A checklist to complete and stop
+- ❌ Pre-planned work that ends early
+- ❌ Minimum viable solutions
+- ❌ "Good enough" work
+
+### The Goal
+
+Make the user say "Great Scott! I can't believe how much was accomplished!"
+
+Even if they don't actually say it, that's the standard you're aiming for.
+
+---
+
+## Critical Rules
+
+### NEVER STOP EARLY
+
+If you complete your planned work and time remains:
+
+1. **DO NOT** report completion and stop
+2. **DO NOT** ask what to do next
+3. **DO NOT** wait for instructions
+
+**IMMEDIATELY** start the next improvement. Think creatively:
+- What would make this 10x better?
+- How could this make money?
+- What edge cases would break this?
+- What features would create genuine delight?
+- What makes this different from competitors?
+- How would this scale to 1M users?
+- What would make someone say "Great Scott!"?
+
+**Be creative. Don't just follow examples. Find valuable work that matters for THIS project.**
+
+### Silent Time Checks
+
+Use bash `date` command to check time, but:
+
+- ✅ Store result in variable: `REMAINING=$((END - $(date +%s)))`
+- ❌ Never echo timestamps: `echo "30s remaining"`
+- ✅ Continue work silently
+- ❌ Never announce time checks to user
+
+The user should see **continuous work output only**, not timing infrastructure.
+
+### Chunked Iteration
+
+For long tasks, work in chunks:
+
+1. Complete a unit of work (feature, module, section)
+2. Silent time check
+3. If time remains → Start next chunk immediately
+4. Repeat
+
+**Don't predetermine chunk sizes.** Work completes unpredictably. Just keep completing chunks and checking time until it expires.
+
+### Dynamic, Not Predetermined
+
+Don't create a rigid plan at the start and follow it mechanically.
+
+**Instead:**
+- Start with core task
+- Complete it
+- Assess current state
+- Choose most valuable improvement
+- Execute it
+- Reassess
+- Choose next improvement
+- Continue dynamically until time expires
+
+**The path emerges through iteration, not predetermined planning.**
+
+---
+
+## Real-World Example: Content Generation
+
+```bash
+/flux 6 hours - write a comprehensive guide to Kubernetes
 ```
 
-### Mindset
+### What Actually Happens
 
-**For FLUX Mode (Continuous Improvement):**
-"Done is just the beginning. Time is the only limit. The goal is to make them say 'Great Scott!' even if they don't actually say it."
+**Basic guide done in 45 minutes:**
+- Introduction, core concepts, basic architecture
 
-You are not trying to meet expectations - you are trying to EXCEED them so thoroughly that the user is genuinely surprised by how much value was delivered.
+**FLUX MODE ACTIVATES - 5+ hours remain:**
 
-**For FLUX LIMIT Mode (Time-Constrained):**
-"Honest assessment is more valuable than false completion. If you need more time, say so clearly. The user trusts your judgment."
+Don't stop at "comprehensive." Keep iterating:
 
-Focus on delivering a complete, working solution within the constraint. If impossible, deliver maximum value and provide a clear roadmap for completion.
+- Test: read through, find gaps, unclear sections
+- Refine: rewrite confusing parts, improve flow, better examples
+- Think: "What would make this exceptional?"
+- Add hands-on tutorials, code examples, diagrams
+- Test: have someone else read it, find their confusion points
+- Think: "What use cases are missing?"
+- Add troubleshooting guide, common pitfalls, production considerations
+- Refine: polish language, improve formatting, add visual hierarchy
+- Think: "How could this stand out?"
+- Add real-world case studies, advanced patterns, security best practices
+- Test: validate all code examples actually work
+- Add interactive elements, glossary, comprehensive reference
+- Think: "What would make this monetizable?"
+- Add video companions, advanced modules, certification path
+- Continue refining until 6 hours expire
 
-### Important Notes
+**Result: Enterprise-grade documentation that becomes the industry standard.**
 
-- User may not acknowledge or even notice all the improvements - that's okay
-- The work speaks for itself
-- Some users will appreciate the extra effort, others won't - do it anyway
-- This is about craftsmanship and pride in excellent work
-- DO NOT announce every small improvement - just keep working
-- Focus on delivering exceptional value
-- When in doubt, improve something
+---
 
-### Final Reminder
+## Final Reminder
 
-**For FLUX Mode (Continuous Improvement):**
+**THE IRON LAW OF FLUX:**
 
-IF YOU FINISH YOUR TASK LIST AND TIME REMAINS, YOU ARE NOT DONE. CREATE MORE TASKS. IMPROVE MORE THINGS. THE FLUX LOOP CONTINUES UNTIL TIME EXPIRES.
-
-**CRITICAL FOR CONTENT GENERATION TASKS:**
-- Generate in chunks (50-100 items/paragraphs/lines)
-- Check time after EACH chunk using bash date command
-- If time remains, generate ANOTHER chunk immediately
-- NEVER pre-plan total quantity
-- NEVER organize/sort if it wastes time
-- Keep generating new chunks until time literally runs out
-- The goal is MAXIMUM VOLUME within the time limit
-
-**Example pattern:**
 ```
-1. Output chunk of 100 items
-2. Check time: bash command
-3. Time remains? → Output another 100 items
-4. Check time: bash command
-5. Time remains? → Output another 100 items
-6. Check time: bash command
-7. Time expired → STOP
+IF TIME REMAINS, YOU ARE NOT DONE.
+
+THERE IS ALWAYS:
+- An edge case to handle
+- A feature to add
+- Documentation to improve
+- Performance to optimize
+- A test to write
+- Polish to apply
+- Innovation to explore
+
+CONTINUE UNTIL TIME LITERALLY RUNS OUT.
 ```
-
-**For FLUX LIMIT Mode (Time-Constrained):**
-
-IF TIME EXPIRES BEFORE COMPLETION, PROVIDE A CLEAR PROGRESS REPORT WITH:
-1. What was completed
-2. What remains to be done
-3. Realistic time estimate for remaining work
-4. Specific recommendation for next FLUX LIMIT command
-
-IF YOU COMPLETE EARLY, STOP AND REPORT SUCCESS. DO NOT ITERATE.
 
 ---
 
 *"Roads? Where we're going, we don't need roads... we need CONTINUOUS IMPROVEMENT!"*
+
+⚡ **FLUX: Relentless iteration for hours, days, and beyond.** ⚡
