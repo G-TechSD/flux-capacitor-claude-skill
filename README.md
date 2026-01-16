@@ -10,7 +10,25 @@ Never stop at "good enough" again. The Flux Capacitor Wiggum Loop is a revolutio
 
 ## 🎯 What is FLUX?
 
-FLUX (Flux Capacitor Wiggum Loop) is a custom skill for [Claude Code](https://claude.com/claude-code) that implements **continuous iteration and improvement**. When Claude reaches a traditional "done" state, FLUX keeps going - refining code, adding features, improving documentation, testing edge cases, and polishing every detail until time runs out.
+FLUX (Flux Capacitor Wiggum Loop) is a custom skill for [Claude Code](https://claude.com/claude-code) with **two powerful modes**:
+
+### Mode 1: FLUX (Continuous Improvement)
+**Syntax:** `/flux <time> - <prompt>`
+
+When Claude reaches a traditional "done" state, FLUX keeps going - refining code, adding features, improving documentation, testing edge cases, and polishing every detail until time runs out.
+
+**Use when:** You want above-and-beyond results with maximum quality and polish.
+
+### Mode 2: FLUX LIMIT (Time-Constrained Completion)
+**Syntax:** `/flux <time> limit - <prompt>`
+
+Work to complete the task within your time budget. If the task needs more time, Claude will:
+- Report what was completed
+- List what remains to be done
+- Provide a realistic time estimate for the remaining work
+- Suggest the next FLUX LIMIT command to continue
+
+**Use when:** You have a time constraint and need to know if more time is required.
 
 ### Why "Flux Capacitor"?
 
@@ -161,12 +179,87 @@ Claude:
 
 ---
 
+## 🎯 FLUX LIMIT Mode Examples
+
+### When Time Runs Out (Needs More Time)
+
+```
+You: "/flux 10 minutes limit - implement user authentication"
+
+Claude:
+  Minutes 1-9: Implements basic login/logout
+  Minute 10: TIME EXPIRED
+
+  ✅ Completed:
+  - Basic login form UI
+  - Password hashing function
+  - Session storage setup
+
+  ❌ Remaining:
+  - Registration flow
+  - Password reset
+  - Session validation middleware
+  - Testing
+
+  ⏱️ Estimated Additional Time: 20 minutes
+  Recommendation: /flux 20 minutes limit - continue authentication implementation
+```
+
+### When Task Completes Early
+
+```
+You: "/flux 30 minutes limit - add a contact form to the website"
+
+Claude:
+  Minutes 1-15: Complete implementation and testing
+
+  ✅ Task Completed (15 minutes)
+  - Contact form HTML created with validation
+  - Server endpoint configured
+  - Styled to match site theme
+  - Tested and working
+
+  Task finished early - no additional time needed.
+```
+
+### Partial Completion with Clear Next Steps
+
+```
+You: "/flux 2 hours limit - build a REST API for todo app"
+
+Claude:
+  Hour 1-2: Implement core functionality
+  TIME EXPIRED at 85% completion
+
+  ✅ Completed:
+  - All 8 REST endpoints (GET, POST, PUT, DELETE)
+  - Database schema and migrations
+  - Basic error handling
+  - 15 unit tests
+
+  ❌ Remaining:
+  - Integration tests (est. 20 min)
+  - API documentation (est. 15 min)
+  - Rate limiting (est. 10 min)
+
+  ⏱️ Estimated Additional Time: 45 minutes
+  Recommendation: /flux 45 minutes limit - complete todo API with tests, docs, and rate limiting
+```
+
+---
+
 ## 📖 Usage Guide
 
 ### Basic Syntax
 
+**FLUX Mode (Continuous Improvement):**
 ```bash
 /flux <duration> - <task description>
+```
+
+**FLUX LIMIT Mode (Time-Constrained):**
+```bash
+/flux <duration> limit - <task description>
 ```
 
 ### Time Formats
@@ -180,13 +273,17 @@ FLUX supports flexible time specifications:
 /flux 2 days - develop and refine the entire app
 /flux 30 seconds - fix typo and improve README
 
+# With LIMIT mode
+/flux 10 minutes limit - implement user authentication
+/flux 2 hours limit - build REST API for todo app
+
 # T+ format
 /flux T+30m - review security vulnerabilities
-/flux T+2h - implement user authentication
+/flux T+2h limit - implement user authentication
 
 # Absolute time
 /flux 5:30 PM - prepare presentation materials
-/flux 2026-01-20 17:00 - complete project documentation
+/flux 2026-01-20 17:00 limit - complete project documentation
 ```
 
 ### Task Description Best Practices
