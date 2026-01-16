@@ -33,10 +33,14 @@ The longer the duration, the more dynamic and transformative the results.
 ### The FLUX Process
 
 1. **Parse time**: Calculate end time (e.g., 24 hours from now)
-2. **Start work**: Begin the core task
-3. **Reach "done"**: Complete initial requirements
-4. **FLUX ACTIVATES**: Continue iterating until time expires
-5. **Never stop early**: Keep improving until the last second
+2. **Save end time**: `echo $END_TIME > /tmp/flux_end_time`
+3. **Start work**: Begin the core task
+4. **After EVERY chunk**: Run time check bash command with `echo $REMAINING`
+5. **See the number**: You MUST see remaining seconds output
+6. **Continue if > 0**: If remaining > 0, generate another chunk immediately
+7. **Stop only when <= 0**: Only stop when remaining seconds <= 0
+
+**CRITICAL**: If you don't run bash time checks with echo after EVERY chunk, you'll stop too early. The time check MUST output the number so you can see it and decide whether to continue.
 
 ---
 
@@ -52,6 +56,13 @@ When you complete the initial task:
 - ✅ Tests passing at hour 12 of 24? → **12 hours of polish remain**
 
 **NEVER STOP UNTIL TIME EXPIRES.**
+
+**HOW TO KNOW IF TIME REMAINS:**
+- After EVERY chunk, run: `END_TIME=$(cat /tmp/flux_end_time); REMAINING=$((END_TIME - $(date +%s))); echo $REMAINING`
+- You'll see a number (remaining seconds)
+- If the number > 0: Keep going, generate another chunk
+- If the number <= 0: Stop
+- **Never guess or assume - always check and SEE the number**
 
 ### What to Do When "Done"
 
@@ -74,19 +85,27 @@ When you complete the initial task:
 
 ---
 
-## Time Tracking (Silent Mode)
+## Time Tracking (Critical for FLUX to Work)
 
-Check time between work chunks using bash, but **NEVER show timestamps to the user**:
+**CRITICAL**: You MUST check time after EVERY chunk of work. Use bash to get the remaining seconds:
 
 ```bash
-# Silent time check (no echo, no output)
-CURRENT=$(date +%s)
-REMAINING=$((END_TIME - CURRENT))
-
-# Just continue working based on REMAINING value
+# Check remaining time - THIS MUST OUTPUT THE NUMBER
+END_TIME=$(cat /tmp/flux_end_time)
+REMAINING=$((END_TIME - $(date +%s)))
+echo $REMAINING
 ```
 
-**The user should only see continuous work output, not time checks.**
+**The time check MUST output the remaining seconds so you can see it.** If remaining > 0, generate another chunk immediately. If remaining <= 0, stop.
+
+**Pattern:**
+1. Generate chunk of output
+2. Run time check bash command - SEE the remaining seconds
+3. If remaining > 0 → Generate another chunk immediately
+4. If remaining <= 0 → Stop
+5. Repeat
+
+**Never skip time checks. Check after EVERY single chunk.**
 
 ---
 
@@ -98,11 +117,22 @@ For content generation, code, or lists:
 
 ```
 1. Generate chunk (code, text, items, features)
-2. Silent time check
-3. Time remains? → Generate another chunk
-4. Silent time check
-5. Time remains? → Generate another chunk
-6. Repeat until time expires
+2. TIME CHECK: Run bash command, SEE remaining seconds
+3. Remaining > 0? → Generate another chunk immediately
+4. TIME CHECK: Run bash command, SEE remaining seconds
+5. Remaining > 0? → Generate another chunk immediately
+6. Repeat until remaining <= 0
+```
+
+**Example of time checks you'll see:**
+```
+First chunk: 500 items generated
+Bash: echo $REMAINING → Output: 1140 (19 minutes left)
+Second chunk: 500 more items
+Bash: echo $REMAINING → Output: 1080 (18 minutes left)
+Third chunk: 500 more items
+Bash: echo $REMAINING → Output: 1020 (17 minutes left)
+... continue until remaining <= 0
 ```
 
 ### Example
@@ -335,16 +365,24 @@ If you complete your planned work and time remains:
 
 **Be creative. Don't just follow examples. Find valuable work that matters for THIS project.**
 
-### Silent Time Checks
+### Time Checks - THE CRITICAL LOOP
 
-Use bash `date` command to check time, but:
+**MANDATORY after every chunk of work:**
 
-- ✅ Store result in variable: `REMAINING=$((END - $(date +%s)))`
-- ❌ Never echo timestamps: `echo "30s remaining"`
-- ✅ Continue work silently
-- ❌ Never announce time checks to user
+```bash
+END_TIME=$(cat /tmp/flux_end_time)
+REMAINING=$((END_TIME - $(date +%s)))
+echo $REMAINING
+```
 
-The user should see **continuous work output only**, not timing infrastructure.
+**YOU MUST SEE THE NUMBER.** The echo is critical - without it, you can't see how much time remains.
+
+- ✅ Output the remaining seconds: `echo $REMAINING`
+- ✅ Check this number after EVERY chunk
+- ✅ If > 0, generate another chunk IMMEDIATELY
+- ✅ If <= 0, stop
+
+**Do not announce time to user in your text, but DO run the bash command and SEE the output.**
 
 ### Chunked Iteration
 
